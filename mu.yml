@@ -1,0 +1,7 @@
+service:
+  name: ecogy-camunda-bpm
+  port: 8080
+  healthEndpoint: /
+  pathPatterns:
+  - /*
+  pipeline:
