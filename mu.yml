@@ -1,7 +1,17 @@
+environments:
+  - name: acceptance
+    cluster:
+      maxSize: 1
+  - name: production
+    cluster:
+      maxSize: 1
+
 service:
   name: ecogy-camunda-bpm
   port: 8080
   healthEndpoint: /
   pathPatterns:
-  - /*
+    - /*
   pipeline:
+    source:
+      repo: ecogyenergy/docker-camunda-bpm-platform
