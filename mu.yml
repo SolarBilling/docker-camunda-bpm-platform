@@ -1,8 +1,12 @@
 environments:
   - name: acceptance
-    provider: ec2
+    provider: eks
+    cluster:
+      maxSize: 1
   - name: production
-    provider: ec2
+    provider: eks
+    cluster:
+      maxSize: 1
 
 service:
   name: ecogy-camunda-bpm
