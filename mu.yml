@@ -1,10 +1,8 @@
 environments:
   - name: acceptance
-    provider: eks
     cluster:
       maxSize: 1
   - name: production
-    provider: eks
     cluster:
       maxSize: 1
 
