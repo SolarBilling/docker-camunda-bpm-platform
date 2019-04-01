@@ -33,7 +33,7 @@ service:
 
   # Define the database
   database:
-    name: ecogy-camunda-db # Name of database to create on RDS instance
+    name: camunda # Name of database to create on RDS instance
 
     ## The following configs are the defaults if no `environmentConfig` is defined
     engine: postgres # RDS engine to use (default: aurora)
