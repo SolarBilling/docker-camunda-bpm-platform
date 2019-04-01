@@ -36,7 +36,8 @@ service:
     name: ecogy-camunda-db # Name of database to create on RDS instance
 
     ## The following configs are the defaults if no `environmentConfig` is defined
-    engine: postgresql # RDS engine to use (default: aurora)
+    engine: postgres # RDS engine to use (default: aurora)
+    engineVersion: 10.4
     instanceClass: db.t2.micro # Instance class (default: db.t2.small)
     iamAuthentication: true # Enable IAM authentication (default: false)
     masterUsername: admin # RDS master username (default: admin)
