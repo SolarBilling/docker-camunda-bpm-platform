@@ -1,9 +1,15 @@
 environments:
   - name: acceptance
+    loadbalancer:
+      hostname: bpm.ecogytest.io
     cluster:
+      desiredCapacity: 1
       maxSize: 1
   - name: production
+    loadbalancer:
+      hostname: bpm.ecogy.io
     cluster:
+      desiredCapacity: 1
       maxSize: 1
 
 service:
@@ -15,3 +21,39 @@ service:
   pipeline:
     source:
       repo: ecogyenergy/docker-camunda-bpm-platform
+
+  # Pass DB config as environment variables
+  environment:
+    DB_USERNAME: ${DatabaseMasterUsername}
+    DB_PASSWORD: ${DatabaseMasterPassword}
+    DB_URL: jdbc:mysql://${DatabaseEndpointAddress}:${DatabaseEndpointPort}/${DatabaseName}
+    DB_DRIVER: org.postgresql.Driver
+
+  # Define the database
+  database:
+    name: ecogy-camunda-db # Name of database to create on RDS instance
+
+    ## The following configs are the defaults if no `environmentConfig` is defined
+    engine: postgresql # RDS engine to use (default: aurora)
+    instanceClass: db.t2.micro # Instance class (default: db.t2.small)
+    iamAuthentication: true # Enable IAM authentication (default: false)
+    masterUsername: admin # RDS master username (default: admin)
+    allocatedStorage: 100 # Storage requirement (in GB) (default: none)
+    engineMode: provisioned # RDS engine mode: provisioned or serverless (default: provisioned)
+    minSize: 2 # Minimum ACU for auto scaling (default: 2)
+    maxSize: 16 # Maximum ACU for auto scaling (default: 256)
+    autoPauseSeconds: 300 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
+    # kmsKey: arn:aws....                       # The ARN of the KMS key to use for the database
+
+    # Configuration per environment, override any of the configs above
+    environmentConfig:
+      acceptance:
+        engineMode: serverless # RDS engine mode: provisioned or serverless (default: provisioned)
+        minSize: 2 # Minimum ACU for auto scaling (default: 2)
+        maxSize: 2 # Maximum ACU for auto scaling (default: 256)
+        autoPauseSeconds: 300 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
+      production:
+        engineMode: provisioned # RDS engine mode: provisioned or serverless (default: provisioned)
+        minSize: 8 # Minimum ACU for auto scaling (default: 2)
+        maxSize: 64 # Maximum ACU for auto scaling (default: 256)
+        autoPauseSeconds: 0 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
