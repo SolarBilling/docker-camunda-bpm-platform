@@ -1,14 +1,14 @@
 environments:
   - name: acceptance
     loadbalancer:
-      host: ecogytest.io
+      hostedzone: ecogytest.io
       name: bpm
     cluster:
       desiredCapacity: 1
       maxSize: 1
   - name: production
     loadbalancer:
-      host: ecogytest.io
+      hostedzone: ecogytest.io
       name: bpm
     cluster:
       desiredCapacity: 1
@@ -44,7 +44,6 @@ service:
     engineMode: provisioned # RDS engine mode: provisioned or serverless (default: provisioned)
     minSize: 2 # Minimum ACU for auto scaling (default: 2)
     maxSize: 16 # Maximum ACU for auto scaling (default: 256)
-    autoPauseSeconds: 300 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
     kmsKey: arn:aws:kms:us-east-1:061911147985:key/8e1c7297-9eaa-4ed4-97bf-c27d9cc6a3ec # The ARN of the KMS key to use for the database
 
     # Configuration per environment, override any of the configs above
@@ -53,9 +52,7 @@ service:
         engineMode: serverless # RDS engine mode: provisioned or serverless (default: provisioned)
         minSize: 2 # Minimum ACU for auto scaling (default: 2)
         maxSize: 2 # Maximum ACU for auto scaling (default: 256)
-        autoPauseSeconds: 300 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
       production:
         engineMode: provisioned # RDS engine mode: provisioned or serverless (default: provisioned)
         minSize: 8 # Minimum ACU for auto scaling (default: 2)
         maxSize: 64 # Maximum ACU for auto scaling (default: 256)
-        autoPauseSeconds: 0 # Number of seconds after which DB is paused. Set to 0 to disable auto pause (default: 0)
