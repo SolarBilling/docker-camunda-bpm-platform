@@ -15,7 +15,7 @@ RUN apk add --no-cache \
   wget \
   xmlstarlet
 
-COPY settings.xml download.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
+COPY tomcat-users.xml settings.xml download.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
 
 RUN chmod +x /tmp/*.sh
 RUN /tmp/download.sh
@@ -63,3 +63,4 @@ ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["./camunda.sh"]
 
 COPY --chown=camunda:camunda --from=builder /camunda .
+COPY --chown=camunda:camunda --from=builder /tmp/tomcat-users.xml conf
